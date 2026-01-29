@@ -40,7 +40,7 @@
                 resultBox.innerText = "Analizing"; 
                 
                 // Every second
-                setInterval(captureAndPredict, 1000); 
+                setInterval(captureAndPredict, 2000); 
             })
             .catch(err => { 
                 console.error("Camera error:", err); 
@@ -62,7 +62,7 @@
                 formData.append('image', blob, 'capture.jpg');
 
                 // Delivering
-                fetch('https://dactiMex.onrender.com/predict', {
+                fetch('https://dactilologiaMexicana.onrender.com/predict', {
                     method: 'POST',
                     body: formData
                 })
