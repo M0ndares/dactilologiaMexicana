@@ -21,36 +21,52 @@
     </div>
     <img src="frame.png"; style= "max-height: 3%; max-width: 5%;">
     
-    <div id="result-box" style="color: #f0f2f5;">Waiting for camera...</div>
-    
+    <div id="result-box" style="color: #f0f2f5; text-align: center;">Esperando cámara</div>
+    <div id="confidence-box" style="color: #f0f2f5;"></div>
+    <br>
+    <button id="pause-button" onclick="clicked(true)" style="background-color:#f0f2f5; max-width: rem; cursor: pointer; color: #ff00b8;">⏸</button>
+    <button id="reset-button" onclick="clicked(false)" style="background-color:#f0f2f5; max-width: rem; cursor: pointer; color: #ff00b8;">🗘</button>
     <canvas id="canvas" style="display:none;"></canvas>
 
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const resultBox = document.getElementById('result-box');
+        const confidenceBox = document.getElementById('confidence-box');
+        const pauseButton = document.getElementById('pause-button');
 
         // Checks availability
         let isProcessing = false;
+        let isPaused = false;
+        
+        function clicked(state) {
+            if(state) {
+                isPaused = !isPaused;
+                if(isPaused) pauseButton.textContent = '▶';
+                else pauseButton.textContent = '⏸';
+            } else {
+                resultBox.textContent = ''
+                confidenceBox.textContent = ''
+            }
+        }
 
         // Camera
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
             .then(stream => { 
                 video.srcObject = stream; 
-                resultBox.innerText = "Analizing"; 
-                
+                resultBox.innerText = ""; 
                 // Every second
-                setInterval(captureAndPredict, 2000); 
+                if(!isPaused) setInterval(captureAndPredict, 3000); 
             })
             .catch(err => { 
-                console.error("Camera error:", err); 
-                resultBox.innerText = "An error ocurred while accesing to the camera"; 
+                console.error("Error de cámara:", err); 
+                resultBox.innerText = "No se pudo acceder a la cámara"; 
             });
 
         // Capture
         function captureAndPredict() {
             // If not available
-            if (isProcessing) return;
+            if (isProcessing || isPaused) return;
 
             isProcessing = true;
             canvas.width = video.videoWidth;
@@ -62,7 +78,7 @@
                 formData.append('image', blob, 'capture.jpg');
 
                 // Delivering
-                fetch('https://dactilologiaMexicana.onrender.com/predict', {
+                fetch('http://localhost:10001/predict', {
                     method: 'POST',
                     body: formData
                 })
@@ -72,12 +88,14 @@
                         resultBox.innerText = "Error: " + data.error;
                     } else {
                         // Mostramos el resultado actualizado
-                        resultBox.innerHTML = `Detected as <span class="${data.class}">${data.class.toUpperCase()}</span> <br> <small>Confianza: ${data.confidence}</small>`;
+                        if(data.class == '_') resultBox.innerHTML = `<span class="${data.class}">${data.class.toUpperCase()}</span>`;
+                        else resultBox.innerHTML += `<span class="${data.class}">${data.class.toUpperCase()}</span>`;
+                        confidenceBox.innerHTML = `<span class="${data.class}">Confianza: ${data.confidence}</span>`;
                     }
                 })
                 .catch(err => {
                     console.error("Error:", err);
-                    resultBox.innerText = "Server error";
+                    resultBox.innerText = "Error con el servidor";
                 })
                 .finally(() => {
                     // Available

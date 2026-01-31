@@ -16,43 +16,9 @@ CORS(app)
 
 IMG_SIZE = 224
 CLASS_NAMES = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "i",
-    "j",
-    "k",
-    "l",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-    "m",
-    "n",
-    "a",
-    "g",
-    "h",
-    "_"
+    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "b", "c", "d", 
+    "e", "f", "i", "j", "k", "l", "o", "p", "q", "r", "s", "t", "u", 
+    "v", "w", "x", "y", "z", "m", "n", "a", "g", "h", "_"
 ]
 
 model = None
@@ -74,23 +40,9 @@ except Exception as e:
 def prepare_image(file_stream):
     file_bytes = np.frombuffer(file_stream.read(), np.uint8)
     img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-    
-    h, w = img.shape[:2]
-    top, bottom, left, right = 0, 0, 0, 0
-    if w >= h:
-        top = (w - h) // 2
-        bottom = (w - h) - top
-    else:
-        left = (h - w) // 2
-        right = (h - w) - left
-    
-    if any([top, bottom, left, right]):
-        img = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=(0, 0, 0))
-    
     img = cv2.resize(img, (IMG_SIZE, IMG_SIZE), interpolation=cv2.INTER_AREA)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = img.astype('float32')
-    return np.expand_dims(img, axis=0)
+    return np.expand_dims(img, axis=0).astype('float32')
 
 @app.route('/predict', methods=['POST'])
 def predict():
