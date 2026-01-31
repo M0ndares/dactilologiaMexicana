@@ -78,7 +78,7 @@
                 formData.append('image', blob, 'capture.jpg');
 
                 // Delivering
-                fetch('http://localhost:10001/predict', {
+                fetch('https://dactilologiamexicana.onrender.com/predict', {
                     method: 'POST',
                     body: formData
                 })
