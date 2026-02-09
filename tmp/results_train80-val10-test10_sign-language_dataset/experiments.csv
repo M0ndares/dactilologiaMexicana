@@ -1,0 +1,1 @@
+ExperimentNo,ImageSize,Architecture,Dropout,HiddenNeurons,DataAugmentation,CosineAnnealing,InitLearningRate,Optimizer,MonitorLoss,BatchSize,TrainAcc,ValAcc,TestAcc

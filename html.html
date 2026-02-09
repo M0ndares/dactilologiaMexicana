@@ -15,7 +15,6 @@
 </head>
 <body style="background-color: #ff00b8;">
     <img src="frame.png"; style= "max-height: 5%; max-width: 5%;">
-    
     <div id="camera-container" style="border-color: #f0f2f5;">
         <video id="video" autoplay playsinline></video>
     </div>
@@ -78,7 +77,7 @@
                 formData.append('image', blob, 'capture.jpg');
 
                 // Delivering
-                fetch('https://dactilologiamexicana.onrender.com/predict', {
+                fetch('http://127.0.0.1:10001/predict', {
                     method: 'POST',
                     body: formData
                 })
