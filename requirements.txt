@@ -1,6 +1,9 @@
 flask
 flask-cors
 opencv-python-headless
-numpy
-tensorflow==2.20.0
-keras==3.13.0
+numpy<2
+tensorflow<2.15
+keras<3
+pandas
+mediapipe
+scikit-learn 

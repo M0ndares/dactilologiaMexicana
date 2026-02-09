@@ -281,7 +281,7 @@ architecture = 'ResNet50V2'
 root_folder = r'C:\Users\m0nda\Visual Studio\Projects\dactiMex'
 
 data_folder = os.path.join(root_folder, 'data')
-original_data_folder = os.path.join(data_folder, f'images\{dataset}')
+original_data_folder = os.path.join(data_folder, f'images\[{dataset}')
 
 if data_sub_folder != '':
     data_folder = os.path.join(root_folder, 'data', 'data_' + data_sub_folder)
