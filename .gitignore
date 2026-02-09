@@ -2,3 +2,4 @@ machinery/
 .venv/
 venv_linux/
 data/
+tmp/
