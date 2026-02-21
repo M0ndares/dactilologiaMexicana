@@ -34,7 +34,6 @@
         const confidenceBox = document.getElementById('confidence-box');
         const pauseButton = document.getElementById('pause-button');
 
-        // Checks availability
         let isProcessing = false;
         let isPaused = false;
         
@@ -55,7 +54,7 @@
                 video.srcObject = stream; 
                 resultBox.innerText = ""; 
                 // Every second
-                if(!isPaused) setInterval(captureAndPredict, 3000); 
+                if(!isPaused) setInterval(captureAndPredict, 2000); 
             })
             .catch(err => { 
                 console.error("Error de cámara:", err); 
@@ -86,8 +85,7 @@
                     if(data.error) {
                         resultBox.innerText = "Error: " + data.error;
                     } else {
-                        // Mostramos el resultado actualizado
-                        if(data.class == '_') resultBox.innerHTML = `<span class="${data.class}">${data.class.toUpperCase()}</span>`;
+                        if(data.class == '_') resultBox.innerHTML = '';
                         else resultBox.innerHTML += `<span class="${data.class}">${data.class.toUpperCase()}</span>`;
                         confidenceBox.innerHTML = `<span class="${data.class}">Confianza: ${data.confidence}</span>`;
                     }
@@ -97,7 +95,6 @@
                     resultBox.innerText = "Error con el servidor";
                 })
                 .finally(() => {
-                    // Available
                     isProcessing = false;
                 });
             }, 'image/jpeg', 0.6);
