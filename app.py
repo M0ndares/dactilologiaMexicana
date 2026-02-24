@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import keras
 from keras.models import load_model
-from keras.applications.efficientnet_v2 import preprocess_input
+from keras.applications.resnet_v2 import preprocess_input
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 from mediapipe.tasks.python import components
