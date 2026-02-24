@@ -54,7 +54,7 @@
                 video.srcObject = stream; 
                 resultBox.innerText = ""; 
                 // Every second
-                if(!isPaused) setInterval(captureAndPredict, 2000); 
+                if(!isPaused) setInterval(captureAndPredict, 3000); 
             })
             .catch(err => { 
                 console.error("Error de cámara:", err); 
@@ -76,7 +76,7 @@
                 formData.append('image', blob, 'capture.jpg');
 
                 // Delivering
-                fetch('http://127.0.0.1:10001/predict', {
+                fetch('https://dactilologiamexicana.onrender.com/predict', {
                     method: 'POST',
                     body: formData
                 })
