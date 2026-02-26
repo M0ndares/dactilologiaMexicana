@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import keras
 from keras.models import load_model
-from keras.applications.resnet_v2 import preprocess_input
+from keras.applications.efficientnet_v2 import preprocess_input
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 from mediapipe.tasks.python import components
@@ -26,12 +26,11 @@ def custom_preprocess(x):
 
 IMG_SIZE = 224
 CLASS_NAMES =  ["a", "b", "c", "d", "e", "f", "g", "h",
-                "i", "j", "k", "l", "m", "n", "o", "p", 
-                "q", "r", "s", "t", "u", "v", "w", "x", 
-                "y", "z", "_", "\u00f1"]
-   
+                "i", "j", "k", "l", "m", "_", "n", "\u00f1", 
+                "o", "p", "q", "r", "s", "t", "u", "v", 
+                "w", "x", "y", "z"]
 
-MODEL_PATH = 'model2.h5'
+MODEL_PATH = 'model.h5'
 model = load_model(MODEL_PATH, custom_objects={'preprocess_input': custom_preprocess}, compile=False)
 
 def prepare_image(file_stream):

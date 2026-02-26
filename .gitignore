@@ -1,6 +1,4 @@
 machinery/
-.venv/
-venv_linux/
-venv_windows/
+venv311/
 data/
 tmp/
