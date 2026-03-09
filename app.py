@@ -49,6 +49,12 @@ def prepare_image(file_stream):
         
         x_min, x_max = min(x_coords), max(x_coords)
         y_min, y_max = min(y_coords), max(y_coords)
+        coordenates = { 
+            "x_min": x_min,
+            "x_max": x_max,
+            "y_min": y_min,
+            "y_max": y_max
+        }
 
         hand_w = x_max - x_min
         hand_h = y_max - y_min
@@ -64,10 +70,11 @@ def prepare_image(file_stream):
         final_img = cv2.resize(final_img, (IMG_SIZE, IMG_SIZE))
     else:
         final_img = cv2.resize(img_rgb, (IMG_SIZE, IMG_SIZE))
+        coordenates = False
 
     x = np.array(final_img, dtype='float32')
     x = np.expand_dims(x, axis=0)
-    return preprocess_input(x)
+    return preprocess_input(x), coordenates
 
 
 @app.route('/predict', methods=['POST'])
@@ -77,15 +84,17 @@ def predict():
     
     file = request.files['image']
     try:
-        processed_img = prepare_image(file)
+        processed_img, coordenates = prepare_image(file)
         predictions = model.predict(processed_img, verbose=0)
         class_idx = np.argmax(predictions[0])
         confidence = float(np.max(predictions[0]) * 100)
-        
+
         return jsonify({
             'class': CLASS_NAMES[class_idx],
-            'confidence': f"{confidence:.2f}%"
+            'confidence': f"{confidence:.2f}%",
+            'coordenates': coordenates
         })
+    
     except Exception as e:
         return jsonify({'error': f"Error: {str(e)}"}), 500
 

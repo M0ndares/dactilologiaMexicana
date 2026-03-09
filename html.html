@@ -18,6 +18,7 @@
     <img src="frame.png"; style= "max-height: 20rem;">
     <div id="camera-container" style="border-color: #f0f2f5;">
         <video id="video" autoplay playsinline></video>
+        <canvas id="canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
     </div>
     <img src="frame.png"; style= "max-height: 20rem;">
     
@@ -26,7 +27,6 @@
     <br>
     <button id="pause-button" onclick="clicked(true)" style="background-color:#f0f2f5; max-width: rem; cursor: pointer; color: #ff00b8;">⏸</button>
     <button id="reset-button" onclick="clicked(false)" style="background-color:#f0f2f5; max-width: rem; cursor: pointer; color: #ff00b8;">🗘</button>
-    <canvas id="canvas" style="display:none;"></canvas>
 
     <script>
         const interval = 3000;
@@ -40,11 +40,10 @@
         let isProcessing = false;
         let isPaused = false;
         
-        function clicked(state) {
-            if(state) {
+        function clicked(toPause) {
+            if(toPause) {
                 isPaused = !isPaused;
-                if(isPaused) pauseButton.textContent = '▶';
-                else pauseButton.textContent = '⏸';
+                pauseButton.textContent = isPaused ? "▶" : "⏸";
             } else {
                 resultBox.textContent = ''
                 confidenceBox.textContent = ''
@@ -58,17 +57,17 @@
                 resultBox.innerText = ""; 
                 let innterInterval = interval;
                 setInterval(() => {
-                    if(!isPaused) {
-                        if (innterInterval >= 1000) {
-                            timer.innerHTML =`La próxima captura será tomada dentro de ${innterInterval/1000} segundos`;
-                            innterInterval -= 1000;
-                        } else {
-                            timer.innerHTML = 'Prediciendo...';
-                            captureAndPredict(); 
-                            innterInterval = interval;
-                        }
-
+                    if (innterInterval >= 1000) {
+                        timer.innerHTML =`La próxima captura será tomada dentro de ${innterInterval/1000} segundos`;
+                        innterInterval -= 1000;
+                    } else {
+                        timer.innerHTML = 'Prediciendo...';
+                        captureAndPredict(); 
+                        innterInterval = interval;
                     }
+                     if(isPaused) {
+                        timer.innerHTML = 'Procesamiento en pausa' 
+                    }  
                 }, 1000);
             })
             .catch(err => { 
@@ -79,20 +78,19 @@
         // Capture
         function captureAndPredict() {
             // If not available
-            if (isProcessing || isPaused) return;
+            if (isProcessing) return;
 
             isProcessing = true;
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-
-            canvas.toBlob(blob => {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = video.videoWidth;
+            tempCanvas.height = video.videoHeight;
+            tempCanvas.getContext('2d').drawImage(video, 0, 0);
+            tempCanvas.toBlob(blob => {
                 const formData = new FormData();
                 formData.append('image', blob, 'capture.jpg');
 
-                // Delivering
-                fetch('https://dactilologiamexicana.onrender.com/predict', {
-                // fetch('http://127.0.0.1:10000/predict', {
+                // fetch('https://dactilologiamexicana.onrender.com/predict', {
+                fetch('http://127.0.0.1:10000/predict', {
                     method: 'POST',
                     body: formData
                 })
@@ -101,9 +99,28 @@
                     if(data.error) {
                         resultBox.innerText = "Error: " + data.error;
                     } else {
-                        if(data.class == '_') resultBox.innerHTML = '';
-                        else resultBox.innerHTML += data.class.toUpperCase();
-                        confidenceBox.innerHTML = `Confianza: ${data.confidence}`;
+                        if(data.class == '_') clicked(false);
+                        else if(data.class == '!') clicked(true);
+                        else if(!isPaused && data.coordenates) { 
+                            resultBox.innerHTML += data.class.toUpperCase();
+                            confidenceBox.innerHTML = `Confianza: ${data.confidence}`;
+                        }
+                    }
+
+                    let toDraw = canvas.getContext('2d');                    
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    toDraw.clearRect(0, 0, canvas.width, canvas.height);
+                    let frame = data.coordenates;
+
+                    if (frame) {
+                        toDraw.beginPath();
+                        toDraw.rect(frame.x_min, frame.y_min, frame.x_max - frame.x_min, frame.y_max - frame.y_min); 
+                        toDraw.lineWidth = 4;  
+                        toDraw.strokeStyle = '#ff00b8'; 
+                        toDraw.stroke();             
+                    } else {
+                        timer.innerHTML = 'No se encontró ninguna mano'
                     }
                 })
                 .catch(err => {
