@@ -29,7 +29,7 @@
     <button id="reset-button" onclick="clicked(false)" style="background-color:#f0f2f5; max-width: rem; cursor: pointer; color: #ff00b8;">🗘</button>
 
     <script>
-        const interval = 3000;
+        const interval = 4000;
         const timer = document.getElementById('timer');
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
@@ -89,8 +89,8 @@
                 const formData = new FormData();
                 formData.append('image', blob, 'capture.jpg');
 
-                // fetch('https://dactilologiamexicana.onrender.com/predict', {
-                fetch('http://127.0.0.1:10000/predict', {
+                fetch('https://dactilologiamexicana.onrender.com/predict', {
+                //fetch('http://127.0.0.1:10000/predict', {
                     method: 'POST',
                     body: formData
                 })
@@ -113,7 +113,7 @@
                     toDraw.clearRect(0, 0, canvas.width, canvas.height);
                     let frame = data.coordenates;
 
-                    if (frame) {
+                    /*if (frame) {
                         toDraw.beginPath();
                         toDraw.rect(frame.x_min, frame.y_min, frame.x_max - frame.x_min, frame.y_max - frame.y_min); 
                         toDraw.lineWidth = 4;  
@@ -122,6 +122,7 @@
                     } else {
                         timer.innerHTML = 'No se encontró ninguna mano'
                     }
+                    */
                 })
                 .catch(err => {
                     console.error("Error:", err);
