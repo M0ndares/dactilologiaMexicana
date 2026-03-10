@@ -45,8 +45,8 @@
                 isPaused = !isPaused;
                 pauseButton.textContent = isPaused ? "▶" : "⏸";
             } else {
-                resultBox.textContent = ''
-                confidenceBox.textContent = ''
+                resultBox.textContent = '';
+                confidenceBox.textContent = '';
             }
         }
 
@@ -90,7 +90,7 @@
                 formData.append('image', blob, 'capture.jpg');
 
                 fetch('https://dactilologiamexicana.onrender.com/predict', {
-                //fetch('http://127.0.0.1:10000/predict', {
+                // fetch('http://127.0.0.1:10000/predict', {
                     method: 'POST',
                     body: formData
                 })
@@ -99,7 +99,7 @@
                     if(data.error) {
                         resultBox.innerText = "Error: " + data.error;
                     } else {
-                        if(data.class == '_') clicked(false);
+                        if(data.class == '_' && !isPaused) clicked(false);
                         else if(data.class == '!') clicked(true);
                         else if(!isPaused && data.coordenates) { 
                             resultBox.innerHTML += data.class.toUpperCase();

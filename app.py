@@ -28,8 +28,8 @@ IMG_SIZE = 224
 CLASS_NAMES =  ["a", "b", "c", "d", "e", "f", "g", "h",
                 "i", "j", "k", "l", "m", "_", "n", "\u00f1", 
                 "o", "p", "q", "r", "s", "t", "u", "v", 
-                "w", "x", "y", "z"]
-
+                "w", "x", "y", "z", "!"]
+ 
 MODEL_PATH = 'model.h5'
 model = load_model(MODEL_PATH, custom_objects={'preprocess_input': custom_preprocess}, compile=False)
 
