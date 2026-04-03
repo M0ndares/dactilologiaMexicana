@@ -3,43 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/jpg" href="header_dactiMex.png">
+    <link rel="icon" type="image/jpg" href="fotos/header_dactiMex.png">
     <meta name="theme-color" content="#ff00b8">
-    <title>Dactilología Mexicana</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; background: #f0f2f5; }
-        #camera-container { position: relative; display: inline-block; margin-top: 20px; border: 4px solid #333; border-radius: 10px; overflow: hidden; }
-        video { width: 100%; max-width: 25rem; display: block; }
-        #result-box { margin-top: 20px; font-size: 1.5rem; font-weight: bold; color: #333; min-height: 50px; }
-    </style>
+    <title>dactimex</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: #ff00b8;">
-    <h3 id="timer" style="color: #f0f2f5;"></h3>
-    <img src="frame.png"; style= "max-height: 20rem;">
-    <div id="camera-container" style="border-color: #f0f2f5;">
-        <video id="video" autoplay playsinline></video>
-        <canvas id="canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+<body>
+    <div id="anuncio">
+        <h1>¡Bienvenid@ a dactimex!</h1>
+        <img id="gestos" src="fotos/gestos.jpg"> 
+        <p>Dactimex es capaz de clasificar los 29 gestos mostrados en la imagen superior haciendo uso de 
+            tu webcam. El sistema se encargará de mostrar lo que quieres decir en pantalla. -Osval Valladares
+        </p>
+        <button id="continuar" class="buttons">CONTINUAR</button>
     </div>
-    <img src="frame.png"; style= "max-height: 20rem;">
-    
-    <div id="result-box" style="color: #f0f2f5; text-align: center;">Esperando cámara...</div>
-    <div id="confidence-box" style="color: #f0f2f5;"></div>
+    <h3 id="timer"></h3>
+    <img src="fotos/frame.png"; class="frame">
+    <div id="camera-container">
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
+    </div>
+    <img src="fotos/frame.png"; class="frame">
+    <div id="result-box">Esperando cámara...</div>
+    <div id="confidence-box"></div>
     <br>
-    <button id="pause-button" onclick="clicked(true)" style="background-color:#f0f2f5; max-width: rem; cursor: pointer; color: #ff00b8;">⏸</button>
-    <button id="reset-button" onclick="clicked(false)" style="background-color:#f0f2f5; max-width: rem; cursor: pointer; color: #ff00b8;">🗘</button>
+    <button id="pause-button" onclick="clicked(true)" class="buttons">⏸</button>
+    <button id="reset-button" onclick="clicked(false)" class="buttons"">🗘</button>
 
     <script>
-        const interval = 4000;
+        const interval = 1000;
         const timer = document.getElementById('timer');
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const resultBox = document.getElementById('result-box');
         const confidenceBox = document.getElementById('confidence-box');
         const pauseButton = document.getElementById('pause-button');
-
+        const continuarButton = document.getElementById('continuar');
+        const anuncio = document.getElementById('anuncio');
+        const container = document.getElementById('camera-container');
         let isProcessing = false;
-        let isPaused = false;
+        let isPaused = true;
         
+        continuarButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            isPaused = !isPaused;
+            anuncio.style.display = 'none';
+            container.style.display = 'inline-block';
+        });
+
         function clicked(toPause) {
             if(toPause) {
                 isPaused = !isPaused;
@@ -112,17 +123,6 @@
                     canvas.height = video.videoHeight;
                     toDraw.clearRect(0, 0, canvas.width, canvas.height);
                     let frame = data.coordenates;
-
-                    /*if (frame) {
-                        toDraw.beginPath();
-                        toDraw.rect(frame.x_min, frame.y_min, frame.x_max - frame.x_min, frame.y_max - frame.y_min); 
-                        toDraw.lineWidth = 4;  
-                        toDraw.strokeStyle = '#ff00b8'; 
-                        toDraw.stroke();             
-                    } else {
-                        timer.innerHTML = 'No se encontró ninguna mano'
-                    }
-                    */
                 })
                 .catch(err => {
                     console.error("Error:", err);

@@ -12,7 +12,7 @@ from mediapipe.tasks.python import components
 app = Flask(__name__)
 CORS(app)
 
-base_options = mp.tasks.BaseOptions(model_asset_path='hand_landmarker.task')
+base_options = mp.tasks.BaseOptions(model_asset_path='modelo/hand_landmarker.task')
 options = vision.HandLandmarkerOptions(
     base_options=base_options,
     running_mode=vision.RunningMode.IMAGE, 
@@ -30,7 +30,7 @@ CLASS_NAMES =  ["a", "b", "c", "d", "e", "f", "g", "h",
                 "o", "p", "q", "r", "s", "t", "u", "v", 
                 "w", "x", "y", "z", "!"]
  
-MODEL_PATH = 'model.h5'
+MODEL_PATH = 'modelo/model2.h5'
 model = load_model(MODEL_PATH, custom_objects={'preprocess_input': custom_preprocess}, compile=False)
 
 def prepare_image(file_stream):
