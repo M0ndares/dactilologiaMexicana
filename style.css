@@ -90,18 +90,27 @@ body {
         top: 0; 
         left: 0; 
         width: 70%; 
-        height: 200%; 
+        height: 100%; 
         pointer-events: none
     }   
 
-
-    #gestos {
-        max-width: 30rem;
-        min-height: 20rem;
+   #gestos {
+        width: 100%;
+        max-width: 100%;
+        display: flex;      
+        flex-wrap: wrap;    
+        justify-content: center;
     }
 
-    .frame  {
-        max-width: 5rem;
-        min-height: 2.5rem;
-    }      
+    .frame {
+        width: 40%;         
+        max-width: 100px;    
+        height: auto;        
+        margin: 5px;         
+    }
+
+    #anuncio {
+        max-width: 85%;
+        font-size: 1rem;
+    }
 }
