@@ -17,19 +17,20 @@
         </p>
         <button id="continuar" class="buttons">CONTINUAR</button>
     </div>
-    <h3 id="timer"></h3>
-    <img src="fotos/frame.png"; class="frame">
-    <div id="camera-container">
-        <video id="video" autoplay playsinline></video>
-        <canvas id="canvas"></canvas>
+    <div  id="daWholeThing">
+        <h3 id="timer"></h3>
+        <img src="fotos/frame.png"; class="frame">
+        <div id="camera-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        <img src="fotos/frame.png"; class="frame">
+        <div id="result-box">Esperando cámara...</div>
+        <div id="confidence-box"></div>
+        <br>
+        <button id="pause-button" onclick="clicked(true)" class="buttons">⏸</button>
+        <button id="reset-button" onclick="clicked(false)" class="buttons"">🗘</button>
     </div>
-    <img src="fotos/frame.png"; class="frame">
-    <div id="result-box">Esperando cámara...</div>
-    <div id="confidence-box"></div>
-    <br>
-    <button id="pause-button" onclick="clicked(true)" class="buttons">⏸</button>
-    <button id="reset-button" onclick="clicked(false)" class="buttons"">🗘</button>
-
     <script>
         const interval = 1000;
         const timer = document.getElementById('timer');
@@ -40,7 +41,7 @@
         const pauseButton = document.getElementById('pause-button');
         const continuarButton = document.getElementById('continuar');
         const anuncio = document.getElementById('anuncio');
-        const container = document.getElementById('camera-container');
+        const container = document.getElementById('daWholeThing');
         let isProcessing = false;
         let isPaused = true;
         
