@@ -85,6 +85,9 @@ body {
         font-size: 0.9rem; 
     }
     #gestos {
-        max-width: 30%;
+        max-width: 70%;
     }
+    .frame  {
+        max-height: 5rem;
+    }      
 }
