@@ -69,8 +69,8 @@ body {
 }
 
 .frame  {
-    max-height: 20rem;
-    max-width: 20%;
+    height: auto;
+    max-width: 70px;
 }
 
 #daWholeThing {
@@ -95,11 +95,8 @@ body {
     }   
 
    #gestos {
-        width: 100%;
-        max-width: 100%;
-        display: flex;      
-        flex-wrap: wrap;    
-        justify-content: center;
+        height: auto;
+        max-width: 40px;
     }
 
     .frame {
