@@ -85,6 +85,16 @@ body {
         font-size: 0.9rem; 
     }
 
+    #canvas {
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 80%; 
+        height: 100%; 
+        pointer-events: none
+    }   
+
+
     #gestos {
         max-width: 100%;
     }
