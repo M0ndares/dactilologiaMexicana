@@ -103,10 +103,8 @@ body {
     }
 
     .frame {
-        width: 40%;         
-        max-width: 100px;    
+        max-width: 10%;    
         height: auto;        
-        margin: 5px;         
     }
 
     #anuncio {
