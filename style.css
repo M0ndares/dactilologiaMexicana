@@ -70,7 +70,7 @@ body {
 
 .frame  {
     height: auto;
-    max-width: 70px;
+    width: 70px;
 }
 
 #daWholeThing {
@@ -85,23 +85,23 @@ body {
         font-size: 0.9rem; 
     }
 
-    #canvas {
-        position: absolute; 
-        top: 0; 
-        left: 0; 
-        width: 70%; 
-        height: 100%; 
-        pointer-events: none
-    }   
+    #video { 
+        width: 100%; 
+        max-width: 90%;
+        max-width: 20rem; 
+    }
 
    #gestos {
-        height: auto;
-        max-width: 40px;
+        width: 100%;
+        max-width: 100%;
+        display: flex;      
+        flex-wrap: wrap;    
+        justify-content: center;
     }
 
     .frame {
-        max-width: 3%;    
-        height: auto;        
+        height: auto;
+        width: 30px;
     }
 
     #anuncio {
