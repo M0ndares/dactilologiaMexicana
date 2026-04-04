@@ -55,7 +55,6 @@ body {
 
 #gestos {
     max-width: 95%;
-    padding: 1rem 1rem 1rem 1rem;
 }
 
 #anuncio {
@@ -65,14 +64,27 @@ body {
     text-align: center;
     color: #ff00b8;
     padding: 0rem 1rem 1rem 1rem;
-    max-width: 80%;
+    max-width: 60%;
     border-radius: 1rem;
 }
 
 .frame  {
     max-height: 20rem;
+    max-width: 20%;
 }
 
 #daWholeThing {
     display: none;
+}
+
+@media (max-width: 600px) {
+    #anuncio {
+        margin-left: 0;
+        margin: 10px auto; 
+        max-width: 90%; 
+        font-size: 0.9rem; 
+    }
+    #gestos {
+        max-width: 30%;
+    }
 }
