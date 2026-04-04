@@ -96,10 +96,10 @@ body {
 
 
     #gestos {
-        max-width: 20rem;
+        max-width: 30rem;
     }
 
     .frame  {
-        max-width: 3rem;
+        max-width: 5rem;
     }      
 }
