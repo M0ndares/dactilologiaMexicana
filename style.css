@@ -97,9 +97,11 @@ body {
 
     #gestos {
         max-width: 30rem;
+        min-height: 20rem;
     }
 
     .frame  {
         max-width: 5rem;
+        min-height: 2.5rem;
     }      
 }
