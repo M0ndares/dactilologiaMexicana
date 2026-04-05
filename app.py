@@ -8,7 +8,6 @@ from keras.applications.efficientnet_v2 import preprocess_input
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 from mediapipe.tasks.python import components
-import gc
 
 app = Flask(__name__)
 CORS(app)
@@ -82,9 +81,6 @@ def predict():
         predictions = model.predict(processed_img, verbose=0)
         class_idx = np.argmax(predictions[0])
         confidence = float(np.max(predictions[0]) * 100)
-
-        del processed_img
-        gc.collect()
 
         return jsonify({
             'class': CLASS_NAMES[class_idx],
