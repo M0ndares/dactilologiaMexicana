@@ -98,6 +98,8 @@ def predict():
         if processed_img is not None:
             del processed_img
         gc.collect()
+        keras.clear_session() 
+        gc.collect()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
