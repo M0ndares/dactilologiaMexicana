@@ -49,12 +49,6 @@ def prepare_image(file_stream):
         
         x_min, x_max = min(x_coords), max(x_coords)
         y_min, y_max = min(y_coords), max(y_coords)
-        coordenates = { 
-            "x_min": x_min,
-            "x_max": x_max,
-            "y_min": y_min,
-            "y_max": y_max
-        }
 
         hand_w = x_max - x_min
         hand_h = y_max - y_min
@@ -92,7 +86,6 @@ def predict():
         return jsonify({
             'class': CLASS_NAMES[class_idx],
             'confidence': f"{confidence:.2f}%",
-            'coordenates': coordenates
         })
     
     except Exception as e:
