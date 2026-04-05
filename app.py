@@ -75,7 +75,7 @@ def prepare_image(file_stream):
 @app.route('/predict', methods=['POST'])
 def predict():
     file = request.files['image']
-    processed_img = None #
+    processed_img = None 
     try:
         processed_img = prepare_image(file)
         if processed_img is None:
