@@ -1,5 +1,4 @@
-import tensorflow as tf
-import keras 
+import tensorflow as tf 
 model = tf.keras.models.load_model('modelo/model.h5')
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
 model3 = converter.convert()
