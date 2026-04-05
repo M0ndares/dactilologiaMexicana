@@ -65,11 +65,10 @@ def prepare_image(file_stream):
         final_img = cv2.resize(final_img, (IMG_SIZE, IMG_SIZE))
     else:
         final_img = cv2.resize(img_rgb, (IMG_SIZE, IMG_SIZE))
-        coordenates = False
 
     x = np.array(final_img, dtype='float32')
     x = np.expand_dims(x, axis=0)
-    return preprocess_input(x), coordenates
+    return preprocess_input(x)
 
 
 @app.route('/predict', methods=['POST'])
@@ -79,14 +78,14 @@ def predict():
     
     file = request.files['image']
     try:
-        processed_img, coordenates = prepare_image(file)
+        processed_img
         predictions = model.predict(processed_img, verbose=0)
         class_idx = np.argmax(predictions[0])
         confidence = float(np.max(predictions[0]) * 100)
 
         del processed_img
         gc.collect()
-        
+
         return jsonify({
             'class': CLASS_NAMES[class_idx],
             'confidence': f"{confidence:.2f}%",
