@@ -68,7 +68,7 @@ def prepare_image(file_stream):
         x = np.expand_dims(x, axis=0)
         
         del img, img_rgb, file_bytes
-        return (x / 255.0) 
+        return (x / 127.5) - 1.0
     
     return None
 
