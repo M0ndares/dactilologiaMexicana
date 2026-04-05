@@ -10,7 +10,10 @@ from keras.applications.efficientnet_v2 import preprocess_input
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 import gc 
+import tensorflow as tf
 
+tf.config.set_visible_devices([], 'GPU')
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 app = Flask(__name__)
 CORS(app)
