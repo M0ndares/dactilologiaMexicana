@@ -3,6 +3,6 @@ flask-cors==6.0.2
 opencv-python-headless==4.11.0.86
 numpy==1.26.4
 Pillow==12.1.0
-tflite-runtime==2.14.1
+tflite-runtime==2.14.0
 mediapipe==0.10.32
 protobuf==4.25.8
