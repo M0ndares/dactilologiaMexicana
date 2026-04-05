@@ -4,6 +4,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import keras
+from keras import backend
 from keras.models import load_model
 from keras.applications.efficientnet_v2 import preprocess_input
 import mediapipe as mp
@@ -97,8 +98,7 @@ def predict():
     finally:
         if processed_img is not None:
             del processed_img
-        gc.collect()
-        keras.clear_session() 
+        backend.clear_session() 
         gc.collect()
 
 if __name__ == '__main__':
