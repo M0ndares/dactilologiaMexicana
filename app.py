@@ -30,7 +30,7 @@ CLASS_NAMES =  ["a", "b", "c", "d", "e", "f", "g", "h",
                 "o", "p", "q", "r", "s", "t", "u", "v", 
                 "w", "x", "y", "z", "!"]
  
-MODEL_PATH = 'modelo/model2.h5'
+MODEL_PATH = 'modelo/model.h5'
 model = load_model(MODEL_PATH, custom_objects={'preprocess_input': custom_preprocess}, compile=False)
 
 def prepare_image(file_stream):
