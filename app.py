@@ -78,7 +78,7 @@ def predict():
     
     file = request.files['image']
     try:
-        processed_img
+        processed_img = prepare_image(file)
         predictions = model.predict(processed_img, verbose=0)
         class_idx = np.argmax(predictions[0])
         confidence = float(np.max(predictions[0]) * 100)
