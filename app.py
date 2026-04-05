@@ -68,7 +68,7 @@ def prepare_image(file_stream):
         x = np.expand_dims(x, axis=0)
         
         del img, img_rgb, file_bytes
-        return (x / 127.5) - 1.0
+        return x
     
     return None
 
@@ -88,8 +88,8 @@ def predict():
         confidence = float(predictions[0][class_idx] * 100)
 
 
-        #if confidence < 70: 
-        #   return jsonify({'class': 'None', 'confidence': "Ninguna seña detectada"})
+        if confidence < 70: 
+           return jsonify({'class': 'None', 'confidence': "Ninguna seña detectada"})
 
         return jsonify({
             'class': CLASS_NAMES[class_idx],
