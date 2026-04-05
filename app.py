@@ -3,18 +3,12 @@ import cv2
 import os 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import keras
-from keras import backend
-from keras.models import load_model
-from keras.applications.efficientnet_v2 import preprocess_input
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 import gc 
-import tensorflow as tf
+import tflite_runtime.interpreter as tflite 
 
-tf.config.set_visible_devices([], 'GPU')
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 app = Flask(__name__)
 CORS(app)
 
@@ -31,9 +25,12 @@ CLASS_NAMES = ["a", "b", "c", "d", "e", "f", "g", "h",
                 "i", "j", "k", "l", "m", "_", "n", "ñ", 
                 "o", "p", "q", "r", "s", "t", "u", "v", 
                 "w", "x", "y", "z", "!"]
+MODEL_PATH = 'modelo/model3.tflite'
+interpreter = tflite.Interpreter(model_path=MODEL_PATH)
+interpreter.allocate_tensors()
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
-MODEL_PATH = 'modelo/model.h5'
-model = load_model(MODEL_PATH, custom_objects={'preprocess_input': preprocess_input}, compile=False)
 
 def prepare_image(file_stream):
     file_bytes = np.frombuffer(file_stream.read(), np.uint8)
@@ -71,7 +68,7 @@ def prepare_image(file_stream):
         x = np.expand_dims(x, axis=0)
         
         del img, img_rgb, file_bytes
-        return preprocess_input(x)
+        return (x / 128.0) - 1
     
     return None
 
@@ -84,9 +81,12 @@ def predict():
         if processed_img is None:
             return jsonify({'class': 'None', 'confidence': 'Ninguna seña detectada'})
         
-        predictions = model.predict(processed_img, verbose=0)
-        class_idx = np.argmax(predictions[0])
-        confidence = float(np.max(predictions[0]) * 100)
+        interpreter.set_tensor(input_details[0]['index'], processed_img)
+        interpreter.invoke()
+        predictions = interpreter.get_tensor(output_details[0]['index'])
+        class_idx = np.argmax(predictions)
+        confidence = float(predictions[0][class_idx] * 100)
+
 
         if confidence < 70: 
             return jsonify({'class': 'None', 'confidence': "Ninguna seña detectada"})
@@ -101,7 +101,6 @@ def predict():
     finally:
         if processed_img is not None:
             del processed_img
-        backend.clear_session() 
         gc.collect()
 
 if __name__ == '__main__':
