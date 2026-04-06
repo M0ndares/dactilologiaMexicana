@@ -99,8 +99,8 @@
             tempCanvas.toBlob(blob => {
                 const formData = new FormData();
                 formData.append('image', blob, 'capture.jpg');
-                fetch('https://dactilologiamexicana.onrender.com/predict', {
-                // fetch('http://127.0.0.1:10000/predict', {
+                // fetch('https://dactilologiamexicana.onrender.com/predict', {
+                fetch('http://127.0.0.1:10000/predict', {
                     method: 'POST',
                     body: formData
                 })

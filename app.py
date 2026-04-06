@@ -6,7 +6,8 @@ from flask_cors import CORS
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 import gc 
-import tflite_runtime.interpreter as tflite 
+import tensorflow.lite as tflite
+# import tflite_runtime.interpreter as tflite 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 app = Flask(__name__)
@@ -25,7 +26,7 @@ CLASS_NAMES = ["a", "b", "c", "d", "e", "f", "g", "h",
                 "i", "j", "k", "l", "m", "_", "n", "ñ", 
                 "o", "p", "q", "r", "s", "t", "u", "v", 
                 "w", "x", "y", "z", "!"]
-MODEL_PATH = 'modelo/model3.tflite'
+MODEL_PATH = 'modelo/model.tflite'
 interpreter = tflite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
@@ -88,8 +89,8 @@ def predict():
         confidence = float(predictions[0][class_idx] * 100)
 
 
-        if confidence < 70: 
-           return jsonify({'class': 'None', 'confidence': "Ninguna seña detectada"})
+        # if confidence < 70: 
+        #   return jsonify({'class': 'None', 'confidence': "Ninguna seña detectada"})
 
         return jsonify({
             'class': CLASS_NAMES[class_idx],
