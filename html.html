@@ -28,8 +28,8 @@
         <div id="result-box">Esperando cámara...</div>
         <div id="confidence-box"></div>
         <br>
-        <button id="pause-button" onclick="clicked(true)" class="buttons">⏸</button>
-        <button id="reset-button" onclick="clicked(false)" class="buttons"">🗘</button>
+        <button id="pause-button" onclick="clicked(true)" class="buttons">⏸️</button>
+        <button id="reset-button" onclick="clicked(false)" class="buttons"">🔄</button>
     </div>
     <script>
         const interval = 2000;
@@ -55,7 +55,7 @@
         function clicked(toPause) {
             if(toPause) {
                 isPaused = !isPaused;
-                pauseButton.textContent = isPaused ? "▶" : "⏸";
+                pauseButton.textContent = isPaused ? "▶️" : "⏸️";
             } else {
                 resultBox.textContent = '';
                 confidenceBox.textContent = '';
@@ -63,7 +63,7 @@
         }
 
         // Camera
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
             .then(stream => { 
                 video.srcObject = stream; 
                 resultBox.innerText = ""; 
@@ -96,7 +96,7 @@
             tempCanvas.width = video.videoWidth;
             tempCanvas.height = video.videoHeight;
             tempCanvas.getContext('2d').drawImage(video, 0, 0);
-            tempCanvas.toBlob(blob => {
+            tempCanvas. toBlob(blob => {
                 const formData = new FormData();
                 formData.append('image', blob, 'capture.jpg');
                 fetch('https://dactilologiamexicana.onrender.com/predict', {
@@ -115,8 +115,7 @@
                         else if(!isPaused) {
                             resultBox.innerHTML += data.class.toUpperCase();
                             confidenceBox.innerHTML = `Confianza: ${data.confidence}`;
-                        }
-                            
+                        }       
                     }
                 })
                 .catch(err => {

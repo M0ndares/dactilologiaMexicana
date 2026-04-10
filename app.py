@@ -89,7 +89,7 @@ def predict():
         confidence = float(predictions[0][class_idx] * 100)
 
 
-        if confidence < 70: 
+        if confidence < 50: 
            return jsonify({'class': 'None', 'confidence': "Ninguna seña detectada"})
 
         return jsonify({

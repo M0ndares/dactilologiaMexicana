@@ -40,12 +40,13 @@ body {
 .buttons {
     background-color:#f0f2f5; 
     max-width: 10rem; 
-    max-height: 3rem;
+    min-height: 3rem;
     font-size: x-large;
     font-weight: bolder;
     cursor: pointer; 
     color: #ff00b8;
     border-radius: 1rem;
+    justify-content: center;
 }
 
 .buttons:hover {
@@ -86,7 +87,7 @@ body {
     }
 
     #video { 
-        width: 100%; 
+        width: 80%; 
         max-width: 90%;
         max-width: 20rem; 
     }
