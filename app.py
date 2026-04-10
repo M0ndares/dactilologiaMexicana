@@ -84,7 +84,7 @@ def predict():
         
         interpreter.set_tensor(input_details[0]['index'], processed_img)
         interpreter.invoke()
-        predictions = interpreter.get_tensor(output_details[0]['index'])
+        predictions = interpreter.get_tensor(output_details[0]['index']).copy()
         class_idx = np.argmax(predictions)
         confidence = float(predictions[0][class_idx] * 100)
 
