@@ -92,6 +92,15 @@ body {
         max-width: 20rem; 
     }
 
+    #canvas {
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 80%; 
+        height: 100%; 
+        pointer-events: none
+    }   
+
    #gestos {
         width: 100%;
         max-width: 100%;
