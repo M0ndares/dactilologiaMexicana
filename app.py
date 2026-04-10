@@ -8,6 +8,7 @@ from mediapipe.tasks.python import vision
 import gc 
 # import tensorflow.lite as tflite
 import tflite_runtime.interpreter as tflite 
+import threading
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 app = Flask(__name__)
@@ -73,6 +74,7 @@ def prepare_image(file_stream):
     
     return None
 
+lock = threading.Lock()
 @app.route('/predict', methods=['POST'])
 def predict():
     file = request.files['image']
@@ -82,9 +84,11 @@ def predict():
         if processed_img is None:
             return jsonify({'class': 'None', 'confidence': 'Ninguna seña detectada'})
         
-        interpreter.set_tensor(input_details[0]['index'], processed_img)
-        interpreter.invoke()
-        predictions = interpreter.get_tensor(output_details[0]['index']).copy()
+        with lock: 
+            interpreter.set_tensor(input_details[0]['index'], processed_img)
+            interpreter.invoke()
+            predictions = interpreter.get_tensor(output_details[0]['index']).copy()
+            
         class_idx = np.argmax(predictions)
         confidence = float(predictions[0][class_idx] * 100)
 
