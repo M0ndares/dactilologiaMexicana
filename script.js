@@ -1,4 +1,4 @@
-const interval = 2000;
+const interval = 3000;
 const timer = document.getElementById('timer');
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
@@ -63,7 +63,7 @@ function captureAndPredict() {
         const formData = new FormData();
         formData.append('image', blob, 'capture.jpg');
         fetch('https://dactilologiamexicana.onrender.com/predict', {
-        // fetch('http://127.0.0.1:10000/predict', {
+        //fetch('http://127.0.0.1:10000/predict', {
             method: 'POST',
             body: formData
         })

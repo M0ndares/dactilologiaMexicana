@@ -6,7 +6,7 @@ from flask_cors import CORS
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 import gc 
-# import tensorflow.lite as tflite
+#import tensorflow.lite as tflite
 import tflite_runtime.interpreter as tflite 
 import threading
 
@@ -18,7 +18,7 @@ base_options = mp.tasks.BaseOptions(model_asset_path='modelo/hand_landmarker.tas
 options = vision.HandLandmarkerOptions(
     base_options=base_options,
     running_mode=vision.RunningMode.IMAGE, 
-    num_hands=1
+    num_hands=1,
 )
 
 detector = vision.HandLandmarker.create_from_options(options)
@@ -32,7 +32,6 @@ interpreter = tflite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
-
 
 def prepare_image(file_stream):
     file_bytes = np.frombuffer(file_stream.read(), np.uint8)
