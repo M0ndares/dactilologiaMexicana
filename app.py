@@ -6,7 +6,7 @@ from flask_cors import CORS
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 import gc 
-#import tensorflow.lite as tflite
+# import tensorflow.lite as tflite
 import tflite_runtime.interpreter as tflite 
 import threading
 
@@ -27,7 +27,7 @@ CLASS_NAMES = ["a", "b", "c", "d", "e", "f", "g", "h",
                 "i", "j", "k", "l", "m", "_", "n", "ñ", 
                 "o", "p", "q", "r", "s", "t", "u", "v", 
                 "w", "x", "y", "z", "!"]
-MODEL_PATH = 'modelo/model.tflite'
+MODEL_PATH = 'modelo/model2.tflite'
 interpreter = tflite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
@@ -81,10 +81,10 @@ def predict():
     try:
         processed_img = prepare_image(file)
         if processed_img is None:
-            return jsonify({'class': 'None', 'confidence': 'Ninguna seña detectada'})
+            return jsonify({'class': 'None', 'confidence': 'Ninguna mano detectada'})
         
         with lock: 
-            interpreter.set_tensor(input_details[0]['index'], processed_img)
+            interpreter.set_tensor(input_details[0]['index'],  processed_img)
             interpreter.invoke()
             predictions = interpreter.get_tensor(output_details[0]['index']).copy()
             

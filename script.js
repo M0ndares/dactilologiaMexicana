@@ -63,7 +63,7 @@ function captureAndPredict() {
         const formData = new FormData();
         formData.append('image', blob, 'capture.jpg');
         fetch('https://dactilologiamexicana.onrender.com/predict', {
-        //fetch('http://127.0.0.1:10000/predict', {
+        // fetch('http://127.0.0.1:10000/predict', {
             method: 'POST',
             body: formData
         })
@@ -74,7 +74,7 @@ function captureAndPredict() {
             } else {
                 if(data.class == '_' && !isPaused) clicked(false);
                 else if(data.class == '!') clicked(true);
-                else if(!isPaused && data.class === 'None') confidenceBox.innerText = data.confidence
+                else if(!isPaused && data.class === 'None') confidenceBox.innerText = data.confidence;
                 else if(!isPaused) {
                     resultBox.innerHTML += data.class.toUpperCase();
                     confidenceBox.innerHTML = `Confianza: ${data.confidence}`;
