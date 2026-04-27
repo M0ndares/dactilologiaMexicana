@@ -6,8 +6,8 @@ from flask_cors import CORS
 import mediapipe as mp
 from mediapipe.tasks.python import vision
 import gc 
-# import tensorflow.lite as tflite
-import tflite_runtime.interpreter as tflite 
+import tensorflow.lite as tflite
+# import tflite_runtime.interpreter as tflite 
 import threading
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
