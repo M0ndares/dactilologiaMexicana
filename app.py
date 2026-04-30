@@ -18,7 +18,7 @@ base_options = mp.tasks.BaseOptions(model_asset_path='modelo/hand_landmarker.tas
 options = vision.HandLandmarkerOptions(
     base_options=base_options,
     running_mode=vision.RunningMode.IMAGE, 
-    num_hands=1,
+    num_hands=1
 )
 
 detector = vision.HandLandmarker.create_from_options(options)
