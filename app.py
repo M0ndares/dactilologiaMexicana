@@ -27,7 +27,7 @@ CLASS_NAMES = ["a", "b", "c", "d", "e", "f", "g", "h",
                 "i", "j", "k", "l", "m", "_", "n", "ñ", 
                 "o", "p", "q", "r", "s", "t", "u", "v", 
                 "w", "x", "y", "z", "!"]
-MODEL_PATH = 'modelo/model2.tflite'
+MODEL_PATH = 'modelo/model3.tflite'
 interpreter = tflite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
@@ -90,7 +90,6 @@ def predict():
             
         class_idx = np.argmax(predictions)
         confidence = float(predictions[0][class_idx] * 100)
-
 
         if confidence < 50: 
            return jsonify({'class': 'None', 'confidence': "Ninguna seña detectada"})
