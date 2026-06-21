@@ -2,12 +2,15 @@
 
 Full-Stack Computer Vision web application designed to detect and translate the 27 letters of the Mexican Sign Language (LSM) alphabet in real-time.
 
-![Dactimex Project Demo](dactimex.gif) ### Demo
-- **Frontend:** [https://m0ndares.github.io/dactilologiaMexicana/html.html](https://m0ndares.github.io/dactilologiaMexicana/html.html)
-- **Backend API:** [https://dactilologiamexicana.onrender.com](https://dactilologiamexicana.onrender.com)
-
+![Dactimex Project Demo](dactimex.gif)
 
 **Dactimex** bridges the communication gap for the deaf and hard-of-hearing community by leveraging Deep Learning to translate hand gestures into text.
+
+---
+
+### Demo
+- **Frontend:** [https://m0ndares.github.io/dactilologiaMexicana/html.html](https://m0ndares.github.io/dactilologiaMexicana/html.html)
+- **Backend API:** [https://dactilologiamexicana.onrender.com](https://dactilologiamexicana.onrender.com)
 
 ---
 
