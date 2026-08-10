@@ -19,8 +19,9 @@ Real-time image classification in the cloud can be slow and resource-heavy. Trad
 
 ### The Solution
 This project implements an optimized Full-Stack pipeline:
-1. **Frontend:** Captures video stream frames and sends them via API.
-2. **Backend (Hybrid AI):** Uses MediaPipe to isolate the exact coordinates of the hand, crops the Region of Interest (ROI) dynamically with OpenCV, and feeds only the cropped hand into a custom-trained **TensorFlow Lite** model for alphabet classification.
+1. **Dataset:** Created, curated and published a [~100,000-image open-source dataset](https://www.kaggle.com/datasets/osvalmontesinos/lengua-de-seas-mexicana-100000-fotos) to improve availability of Mexican Sign Language data infrastructure.
+2. **Frontend:** Captures video stream frames and sends them via API.
+3. **Backend:** Uses MediaPipe to isolate the exact coordinates of the hand, crops the Region of Interest (ROI) dynamically with OpenCV, and feeds only the cropped hand into a custom-trained *TensorFlow Lite* model for alphabet classification.
 
 ---
 
